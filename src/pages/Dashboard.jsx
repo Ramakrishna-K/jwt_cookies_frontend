@@ -11,9 +11,12 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchDashboard = async () => {
       try {
+        // const res = await API.get("/auth/dashboard", {
+        //   withCredentials: true, // 🍪 important
+        // });
         const res = await API.get("/auth/dashboard", {
-          withCredentials: true, // 🍪 important
-        });
+  withCredentials: true, // 🍪 important
+});
 
         setUser(res.data.user);
       } catch (err) {
