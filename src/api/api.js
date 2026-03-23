@@ -19,12 +19,12 @@ const API = axios.create({
   withCredentials: true, // important for cookies
 });
 
-// // Attach access token
-// API.interceptors.request.use((config) => {
-//   const token = localStorage.getItem("accessToken");
-//   if (token) config.headers.Authorization = `Bearer ${token}`;
-//   return config;
-// });
+// Attach access token
+API.interceptors.request.use((config) => {
+  // const token = localStorage.getItem("accessToken");
+  if (token) config.headers.Authorization = `Bearer ${token}`;
+  return config;
+});
 
 // Auto-refresh on 401
 API.interceptors.response.use(
