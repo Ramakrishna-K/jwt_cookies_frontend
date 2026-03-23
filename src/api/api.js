@@ -10,14 +10,14 @@
 // export default API;
 
 
-// import axios from "axios";
+import axios from "axios";
 
-// const API = axios.create({
-//   // baseURL: "http://localhost:5200/api",
-//     baseURL: "https://jwt-and-cookies-backend.onrender.com/api",
+const API = axios.create({
+  // baseURL: "http://localhost:5200/api",
+    baseURL: "https://jwt-and-cookies-backend.onrender.com/api",
 
-//   withCredentials: true, // important for cookies
-// });
+  withCredentials: true, // important for cookies
+});
 
 // // Attach access token
 // API.interceptors.request.use((config) => {
@@ -26,56 +26,19 @@
 //   return config;
 // });
 
-// // Auto-refresh on 401
-// API.interceptors.response.use(
-//   (res) => res,
-//   async (err) => {
-//     const originalRequest = err.config;
-
-//     if (err.response.status === 401 && !originalRequest._retry) {
-//       originalRequest._retry = true;
-
-//       const res = await API.post("/auth/refresh");
-//       localStorage.setItem("accessToken", res.data.accessToken);
-
-//       return API(originalRequest);
-//     }
-
-//     return Promise.reject(err);
-//   }
-// );
-
-// export default API;
-
-
-
-
-import axios from "axios";
-
-const API = axios.create({
-  baseURL: "https://jwt-and-cookies-backend.onrender.com/api",
-  withCredentials: true, // ✅ cookies auto sent
-});
-
-// ✅ Auto-refresh (cookie based)
+// Auto-refresh on 401
 API.interceptors.response.use(
   (res) => res,
   async (err) => {
     const originalRequest = err.config;
 
-    if (
-      err.response?.status === 401 &&
-      !originalRequest._retry &&
-      !originalRequest.url.includes("/auth/refresh")
-    ) {
+    if (err.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
-      try {
-        await API.post("/auth/refresh"); // 🍪 cookie used
-        return API(originalRequest);     // retry original
-      } catch (refreshError) {
-        return Promise.reject(refreshError);
-      }
+      const res = await API.post("/auth/refresh");
+      localStorage.setItem("accessToken", res.data.accessToken);
+
+      return API(originalRequest);
     }
 
     return Promise.reject(err);
@@ -83,3 +46,7 @@ API.interceptors.response.use(
 );
 
 export default API;
+
+
+
+
