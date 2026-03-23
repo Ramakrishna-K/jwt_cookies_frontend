@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import API from "../api/api";
+import API from "../api/api.js";
 
 const Dashboard = () => {
   const navigate = useNavigate();
