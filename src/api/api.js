@@ -11,7 +11,6 @@
 
 
 import axios from "axios";
-
 const API = axios.create({
   // baseURL: "http://localhost:5200/api",
     baseURL: "https://jwt-and-cookies-backend.onrender.com/api",
